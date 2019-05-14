@@ -76,4 +76,18 @@ public class Participant {
             }
         }
     }
+
+    public Participant search(String id){
+        Participant searched = null;
+
+        if (id.compareToIgnoreCase(this.id) == 0){
+            searched = this;
+        }else if (id.compareToIgnoreCase(this.id) < 0){
+            searched = left.search(id);
+        }else {
+            searched = right.search(id);
+        }
+
+        return searched;
+    }
 }

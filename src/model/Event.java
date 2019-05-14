@@ -48,10 +48,19 @@ public class Event {
 
         if (root == null){
             root = participant;
-
         }else {
             root.addParticipant(participant);
         }
+    }
+
+    public Participant searchParticipant(String id){
+        Participant searched = null;
+
+        if (root != null){
+            root.search(id);
+        }
+
+        return searched;
     }
 
 
