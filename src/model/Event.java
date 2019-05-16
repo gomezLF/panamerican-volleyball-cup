@@ -1,7 +1,7 @@
 package model;
 
 import customExceptions.EmptyDataException;
-import customExceptions.NotRegisteredPeopleException;
+import customExceptions.NoRegisteredPersonException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.io.IOException;
 public class Event {
 
     private Spectator root;
-    private Spectator first;
+    private Participant first;
 
 
     public Event() {
@@ -56,7 +56,7 @@ public class Event {
         }
     }
 
-    public Spectator searchSpectator(String id) throws EmptyDataException, NotRegisteredPeopleException {
+    public Spectator searchSpectator(String id) throws EmptyDataException, NoRegisteredPersonException {
         Spectator searched = null;
 
         if (id.equals("")){
@@ -64,11 +64,46 @@ public class Event {
 
         }else {
             if (root == null){
-                throw new NotRegisteredPeopleException();
+                throw new NoRegisteredPersonException();
 
             }else{
                 root.search(id);
             }
+        }
+
+        if (searched == null){
+            throw new NullPointerException();
+        }
+        return searched;
+    }
+
+    public Participant searchParticipant(String id) throws EmptyDataException, NoRegisteredPersonException {
+        Participant searched = null;
+
+        if (id.equals("")){
+            throw new EmptyDataException();
+
+        }else {
+            if (first == null){
+                throw new NoRegisteredPersonException();
+
+            }else {
+                Participant current = first;
+                boolean found =  false;
+
+                while(current != null && !found){
+
+                    if (current.compareTo(id) == 0){
+                        found = true;
+                        searched = current;
+                    }
+                    current = current.getNext();
+                }
+            }
+        }
+
+        if (searched == null){
+            throw new NullPointerException();
         }
         return searched;
     }

@@ -3,9 +3,9 @@ package customExceptions;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-public class NotRegisteredPeopleException extends Exception {
+public class NoRegisteredPersonException extends Exception {
 
-    public NotRegisteredPeopleException() {
+    public NoRegisteredPersonException() {
         super("Para poder realizar una busqueda, se deben registrar primero a los espectadores");
     }
 

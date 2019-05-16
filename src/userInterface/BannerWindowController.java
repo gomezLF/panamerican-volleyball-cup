@@ -1,15 +1,13 @@
 package userInterface;
 
 import customExceptions.EmptyDataException;
-import customExceptions.NotRegisteredPeopleException;
+import customExceptions.NoRegisteredPersonException;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Event;
 
@@ -103,7 +101,7 @@ public class BannerWindowController {
 
         }catch (EmptyDataException e){
             e.messsage();
-        }catch (NotRegisteredPeopleException e){
+        }catch (NoRegisteredPersonException e){
             e.message();
         }
     }
