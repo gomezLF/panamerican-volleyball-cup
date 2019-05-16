@@ -61,7 +61,11 @@ public class Event {
     }
 
     private void chooseParticipants(){
+        List<Spectator> list = toList();
 
+        for (int i = 0; i < (list.size() / 2); i++) {
+            
+        }
     }
 
     public List<Spectator> toList(){
