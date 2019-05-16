@@ -1,15 +1,18 @@
 package userInterface;
 
 import customExceptions.EmptyDataException;
-import customExceptions.NoRegisteredPersonException;
+import customExceptions.NotRegisteredPersonException;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Event;
+import model.Participant;
+import model.Spectator;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,16 +35,10 @@ public class BannerWindowController {
     private Label spectatorTime;
 
     @FXML
-    private Label spectatorNotice;
-
-    @FXML
     private TextField searchParticipantTxt;
 
     @FXML
     private Label participantTime;
-
-    @FXML
-    private Label participantNotice;
 
     @FXML
     private ImageView avatarImage;
@@ -92,7 +89,8 @@ public class BannerWindowController {
     @FXML
     void searchSpectatorClicked(ActionEvent event) {
         try{
-            this.event.searchSpectator(searchSpectatorTxt.getText());
+            Spectator s = this.event.searchSpectator(searchSpectatorTxt.getText());
+            showSpectator(s);
 
         }catch (NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.ERROR, "Causado por:\n" + "Espectador no registrado o incorrecto id", ButtonType.CLOSE);
@@ -101,14 +99,29 @@ public class BannerWindowController {
 
         }catch (EmptyDataException e){
             e.messsage();
-        }catch (NoRegisteredPersonException e){
+
+        }catch (NotRegisteredPersonException e){
             e.message();
         }
     }
 
     @FXML
     void searchParticipantClicked(ActionEvent event) {
+        try {
+            Participant p =  this.event.searchParticipant(searchParticipantTxt.getText());
+            showParticipant(p);
 
+        }catch (NullPointerException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Causado por:\n" + "Participante no registrado o incorrecto id", ButtonType.CLOSE);
+            alert.setHeaderText("Participante no encontrado");
+            alert.show();
+
+        }catch (EmptyDataException e){
+            e.messsage();
+
+        }catch (NotRegisteredPersonException e){
+            e.message();
+        }
     }
 
 
@@ -121,5 +134,17 @@ public class BannerWindowController {
     @FXML
     void participantStructureClicked(ActionEvent event) {
 
+    }
+
+
+
+    private void showSpectator(Spectator spectator) {
+        avatarImage.setImage(new Image(spectator.getAvatar()));
+        personDataTxt.setText(spectator.toString());
+    }
+
+    private void showParticipant(Participant participant){
+        avatarImage.setImage(new Image(participant.getAvatar()));
+        personDataTxt.setText(participant.toString());
     }
 }

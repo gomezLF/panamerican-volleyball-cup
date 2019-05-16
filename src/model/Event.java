@@ -1,12 +1,14 @@
 package model;
 
 import customExceptions.EmptyDataException;
-import customExceptions.NoRegisteredPersonException;
+import customExceptions.NotRegisteredPersonException;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Event {
 
@@ -14,10 +16,12 @@ public class Event {
     private Participant first;
 
 
+
     public Event() {
         root = null;
         first = null;
     }
+
 
 
     public void readData(String path) throws IOException {
@@ -56,7 +60,22 @@ public class Event {
         }
     }
 
-    public Spectator searchSpectator(String id) throws EmptyDataException, NoRegisteredPersonException {
+    private void chooseParticipants(){
+
+    }
+
+    public List<Spectator> toList(){
+        List<Spectator> list = new ArrayList<>();
+
+        if (root != null){
+            root.inOrder(list);
+        }
+
+        return list;
+    }
+
+
+    public Spectator searchSpectator(String id) throws EmptyDataException, NotRegisteredPersonException {
         Spectator searched = null;
 
         if (id.equals("")){
@@ -64,10 +83,10 @@ public class Event {
 
         }else {
             if (root == null){
-                throw new NoRegisteredPersonException();
+                throw new NotRegisteredPersonException();
 
             }else{
-                root.search(id);
+                searched =  root.search(id);
             }
         }
 
@@ -77,7 +96,7 @@ public class Event {
         return searched;
     }
 
-    public Participant searchParticipant(String id) throws EmptyDataException, NoRegisteredPersonException {
+    public Participant searchParticipant(String id) throws EmptyDataException, NotRegisteredPersonException {
         Participant searched = null;
 
         if (id.equals("")){
@@ -85,7 +104,7 @@ public class Event {
 
         }else {
             if (first == null){
-                throw new NoRegisteredPersonException();
+                throw new NotRegisteredPersonException();
 
             }else {
                 Participant current = first;
@@ -107,12 +126,4 @@ public class Event {
         }
         return searched;
     }
-
-    private void chooseParticipants(){
-
-    }
-
-
-
-
 }

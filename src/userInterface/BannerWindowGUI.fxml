@@ -87,11 +87,6 @@
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="spectatorNotice" textAlignment="CENTER">
-                                       <font>
-                                          <Font name="System Bold" size="12.5" />
-                                       </font>
-                                    </Label>
                                  </children>
                               </VBox>
                               <VBox alignment="TOP_CENTER" prefHeight="171.0" prefWidth="450.0" spacing="10.0" style="-fx-background-color: orange; -fx-background-radius: 10;">
@@ -123,11 +118,6 @@
                                     <Label fx:id="participantTime" alignment="CENTER" text="Tiempo: 00 ms">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="participantNotice" textAlignment="CENTER">
-                                       <font>
-                                          <Font name="System Bold" size="12.5" />
                                        </font>
                                     </Label>
                                  </children>

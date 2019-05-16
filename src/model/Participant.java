@@ -94,4 +94,13 @@ public class Participant implements Comparable<String> {
 
         return value;
     }
+
+    @Override
+    public String toString() {
+        String message = "";
+
+        message = "Nombre: " + name + " " + lastName + "\n" + "ID: " + id + "\n" + "E-mail: " + email + "\n" + "Género: " + gender + "\n" + "País: " + country + "\n" + "Cumpleaños: " + birthday;
+
+        return message;
+    }
 }

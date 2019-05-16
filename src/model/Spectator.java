@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Spectator {
 
     private Spectator left;
@@ -97,9 +99,27 @@ public class Spectator {
                 searched = right.search(id);
             }
         }
-
         return searched;
     }
 
+    public void inOrder(List<Spectator> list){
+        if (left != null){
+            left.inOrder(list);
+        }
 
+        list.add(this);
+
+        if (right != null){
+            right.inOrder(list);
+        }
+    }
+
+    @Override
+    public String toString() {
+        String message = "";
+
+        message = "Nombre: " + name + " " + lastName + "\n" + "ID: " + id + "\n" + "E-mail: " + email + "\n" + "Género: " + gender + "\n" + "País: " + country + "\n" + "Cumpleaños: " + birthday;
+
+        return message;
+    }
 }
