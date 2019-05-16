@@ -1,13 +1,14 @@
 package model;
 
+import customExceptions.EmptyDataException;
+import customExceptions.NotRegisteredPeopleException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Event {
-
-    private static final String PARTICIPANT_DATA_PATH = "";
 
     private Spectator root;
     private Spectator first;
@@ -19,8 +20,8 @@ public class Event {
     }
 
 
-    public void readData() throws IOException {
-        File file = new File(PARTICIPANT_DATA_PATH);
+    public void readData(String path) throws IOException {
+        File file = new File(path);
         FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
 
@@ -41,6 +42,8 @@ public class Event {
 
             line = br.readLine();
         }
+
+        chooseParticipants();
     }
 
     private void addSpectator(String name, String lastName, String id, String email, String gender, String country, String avatar, String birthday){
@@ -53,14 +56,25 @@ public class Event {
         }
     }
 
-    public Spectator searchSpectator(String id){
+    public Spectator searchSpectator(String id) throws EmptyDataException, NotRegisteredPeopleException {
         Spectator searched = null;
 
-        if (root != null){
-            root.search(id);
-        }
+        if (id.equals("")){
+            throw new EmptyDataException();
 
+        }else {
+            if (root == null){
+                throw new NotRegisteredPeopleException();
+
+            }else{
+                root.search(id);
+            }
+        }
         return searched;
+    }
+
+    private void chooseParticipants(){
+
     }
 
 

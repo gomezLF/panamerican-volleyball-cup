@@ -32,7 +32,7 @@
                                     </Label>
                                     <VBox alignment="CENTER" prefHeight="105.0" prefWidth="448.0" spacing="10.0">
                                        <children>
-                                          <TextField fx:id="pathFileTxt" alignment="CENTER" editable="false" style="-fx-border-color: black;">
+                                          <TextField fx:id="pathFileTxt" alignment="TOP_LEFT" editable="false" style="-fx-border-color: black;">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -58,7 +58,7 @@
                               </VBox>
                               <VBox alignment="TOP_CENTER" prefHeight="171.0" prefWidth="450.0" spacing="10.0" style="-fx-background-color: orange; -fx-background-radius: 10;">
                                  <children>
-                                    <Label alignment="CENTER" style="-fx-background-color: dodgerblue; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Buscar Asistente" textFill="WHITE">
+                                    <Label alignment="CENTER" style="-fx-background-color: dodgerblue; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Buscar Espectador" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="24.0" />
                                        </font>
@@ -70,24 +70,24 @@
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="searchAssistantTxt" alignment="CENTER" prefHeight="30.0" prefWidth="291.0" style="-fx-border-color: black;">
+                                          <TextField fx:id="searchSpectatorTxt" alignment="CENTER" prefHeight="30.0" prefWidth="291.0" style="-fx-border-color: black;">
                                              <font>
                                                 <Font name="System Bold" size="14.0" />
                                              </font>
                                           </TextField>
-                                          <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#searchAssistantClicked" ripplerFill="WHITE" style="-fx-background-color: dodgerblue; -fx-border-color: black; -fx-border-radius: 5;" text="Buscar" textFill="WHITE">
+                                          <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#searchSpectatorClicked" ripplerFill="WHITE" style="-fx-background-color: dodgerblue; -fx-border-color: black; -fx-border-radius: 5;" text="Buscar" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="14.0" />
                                              </font>
                                           </JFXButton>
                                        </children>
                                     </HBox>
-                                    <Label fx:id="assistantTime" alignment="CENTER" text="Tiempo: 00 ms">
+                                    <Label fx:id="spectatorTime" alignment="CENTER" text="Tiempo: 00 ms">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="assistantNotice" textAlignment="CENTER">
+                                    <Label fx:id="spectatorNotice" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="12.5" />
                                        </font>
@@ -188,7 +188,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </JFXButton>
-                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#assistantStructureClicked" style="-fx-background-color: dodgerblue; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Asistentes" textAlignment="CENTER" textFill="WHITE">
+                              <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#spectatorStructureClicked" style="-fx-background-color: dodgerblue; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Espectadores" textAlignment="CENTER" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>

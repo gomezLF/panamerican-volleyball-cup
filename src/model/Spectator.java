@@ -82,10 +82,20 @@ public class Spectator {
 
         if (id.compareToIgnoreCase(this.id) == 0){
             searched = this;
+
         }else if (id.compareToIgnoreCase(this.id) < 0){
-            searched = left.search(id);
+            if (left == null){
+                throw new NullPointerException();
+            }else {
+                searched = left.search(id);
+            }
+
         }else {
-            searched = right.search(id);
+            if (right == null){
+                throw new NullPointerException();
+            }else {
+                searched = right.search(id);
+            }
         }
 
         return searched;
