@@ -9,8 +9,8 @@ public class Event {
 
     private static final String PARTICIPANT_DATA_PATH = "";
 
-    private Participant root;
-    private Participant first;
+    private Spectator root;
+    private Spectator first;
 
 
     public Event() {
@@ -37,24 +37,24 @@ public class Event {
             String photo = words[6];
             String birthday = words[7];
 
-            addParticipant(name, lastName, id, email, gender, country, photo, birthday);
+            addSpectator(name, lastName, id, email, gender, country, photo, birthday);
 
             line = br.readLine();
         }
     }
 
-    private void addParticipant(String name, String lastName, String id, String email, String gender, String country, String avatar, String birthday){
-        Participant participant = new Participant(name, lastName, id, email, gender, country, avatar, birthday);
+    private void addSpectator(String name, String lastName, String id, String email, String gender, String country, String avatar, String birthday){
+        Spectator spectator = new Spectator(name, lastName, id, email, gender, country, avatar, birthday);
 
         if (root == null){
-            root = participant;
+            root = spectator;
         }else {
-            root.addParticipant(participant);
+            root.addSpectator(spectator);
         }
     }
 
-    public Participant searchParticipant(String id){
-        Participant searched = null;
+    public Spectator searchSpectator(String id){
+        Spectator searched = null;
 
         if (root != null){
             root.search(id);
@@ -62,6 +62,8 @@ public class Event {
 
         return searched;
     }
+
+
 
 
 }

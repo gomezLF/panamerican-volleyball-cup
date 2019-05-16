@@ -1,9 +1,9 @@
 package model;
 
-public class Participant {
+public class Spectator {
 
-    private Participant left;
-    private Participant right;
+    private Spectator left;
+    private Spectator right;
 
     private String name;
     private String lastName;
@@ -15,7 +15,7 @@ public class Participant {
     private String birthday;
 
 
-    public Participant(String name, String lastName, String id, String email, String gender, String country, String avatar, String birthday) {
+    public Spectator(String name, String lastName, String id, String email, String gender, String country, String avatar, String birthday) {
         this.name = name;
         this.lastName = lastName;
         this.id = id;
@@ -60,25 +60,25 @@ public class Participant {
     }
 
 
-    public void addParticipant(Participant participant){
-        if (participant.id.compareToIgnoreCase(id) == 0 || participant.id.compareToIgnoreCase(id) < 0){
+    public void addSpectator(Spectator spectator){
+        if (spectator.id.compareToIgnoreCase(id) == 0 || spectator.id.compareToIgnoreCase(id) < 0){
             if (left == null){
-                left = participant;
+                left = spectator;
             }else {
-                left.addParticipant(participant);
+                left.addSpectator(spectator);
             }
 
         }else {
             if (right == null){
-                right = participant;
+                right = spectator;
             }else {
-                right.addParticipant(participant);
+                right.addSpectator(spectator);
             }
         }
     }
 
-    public Participant search(String id){
-        Participant searched = null;
+    public Spectator search(String id){
+        Spectator searched = null;
 
         if (id.compareToIgnoreCase(this.id) == 0){
             searched = this;
@@ -90,4 +90,6 @@ public class Participant {
 
         return searched;
     }
+
+
 }
