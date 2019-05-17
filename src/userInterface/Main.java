@@ -10,7 +10,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("BannerWindowGUI.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("BannerWindow.fxml"));
         stage.setTitle("IV Copa Panamericana de Voleibol Masculino Sub-21");
         stage.setScene(new Scene(root));
         stage.show();

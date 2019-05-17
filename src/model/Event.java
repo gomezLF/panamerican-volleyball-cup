@@ -13,6 +13,7 @@ import java.util.List;
 public class Event {
 
     private Spectator root;
+    
     private Participant first;
 
 
@@ -62,11 +63,55 @@ public class Event {
 
     private void chooseParticipants(){
         List<Spectator> list = toList();
+        int[] randomParticipants = new int[list.size()/2];
 
-        for (int i = 0; i < (list.size() / 2); i++) {
-            
+        for (int i = 0; i < randomParticipants.length; i++) {
+            int rp = (int)Math.floor(Math.random()*(1-(list.size())) + (list.size() - 1));
+            randomParticipants[i] = rp;
+        }
+
+        for (int i = 0; i < randomParticipants.length; i++) {
+            for (int j = 0; j < randomParticipants.length; j++) {
+                if (randomParticipants[i] == randomParticipants[j] && i != j){
+                    int rp = (int)Math.floor(Math.random()*(1-(list.size())) + (list.size() - 1));
+                    randomParticipants[i] = rp;
+                    i = 0;
+                }
+            }
+        }
+
+        createParticipants(list, randomParticipants);
+    }
+
+    private void createParticipants(List<Spectator> list, int[] randomParticipants){
+        for (int i = 0; i < randomParticipants.length; i++) {
+            Spectator s = list.get(randomParticipants[i]);
+            System.out.println(randomParticipants[i]);
+            System.out.println(i + ": " + s.getId());
+
+            Participant participant = new Participant(s.getName(), s.getLastName(), s.getId(), s.getEmail(), s.getGender(), s.getCountry(), s.getAvatar(), s.getBirthday());
+
+            addParticipant(participant);
         }
     }
+
+    private void addParticipant(Participant participant){
+        if (first == null){
+            first = participant;
+
+        }else {
+            Participant current = first;
+
+            while(current.getNext() != null){
+                current = current.getNext();
+            }
+
+            current.setNext(participant);
+            participant.setPrevious(current);
+        }
+    }
+
+
 
     public List<Spectator> toList(){
         List<Spectator> list = new ArrayList<>();
@@ -77,6 +122,7 @@ public class Event {
 
         return list;
     }
+
 
 
     public Spectator searchSpectator(String id) throws EmptyDataException, NotRegisteredPersonException {

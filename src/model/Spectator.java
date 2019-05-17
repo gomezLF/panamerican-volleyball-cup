@@ -26,6 +26,9 @@ public class Spectator {
         this.country = country;
         this.avatar = avatar;
         this.birthday = birthday;
+
+        left = null;
+        right = null;
     }
 
 
@@ -80,7 +83,7 @@ public class Spectator {
     }
 
     public Spectator search(String id){
-        Spectator searched = null;
+        Spectator searched;
 
         if (id.compareToIgnoreCase(this.id) == 0){
             searched = this;
@@ -116,7 +119,7 @@ public class Spectator {
 
     @Override
     public String toString() {
-        String message = "";
+        String message;
 
         message = "Nombre: " + name + " " + lastName + "\n" + "ID: " + id + "\n" + "E-mail: " + email + "\n" + "Género: " + gender + "\n" + "País: " + country + "\n" + "Cumpleaños: " + birthday;
 

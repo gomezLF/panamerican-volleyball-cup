@@ -26,6 +26,9 @@ public class Participant implements Comparable<String> {
         this.country = country;
         this.avatar = avatar;
         this.birthday = birthday;
+
+        next = null;
+        previous = null;
     }
 
 
@@ -82,10 +85,10 @@ public class Participant implements Comparable<String> {
     public int compareTo(String id) {
         int value;
 
-        if (id.compareToIgnoreCase(id) == 0){
+        if (id.compareToIgnoreCase(this.id) == 0){
             value = 0;
 
-        }else if (id.compareToIgnoreCase(id) < 0){
+        }else if (id.compareToIgnoreCase(this.id) < 0){
             value = -1;
 
         }else {

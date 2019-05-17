@@ -7,7 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import com.jfoenix.controls.JFXTextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Event;
@@ -29,13 +29,13 @@ public class BannerWindowController {
     private Label dataNotice;
 
     @FXML
-    private TextField searchSpectatorTxt;
+    private JFXTextField searchSpectatorTxt;
 
     @FXML
     private Label spectatorTime;
 
     @FXML
-    private TextField searchParticipantTxt;
+    private JFXTextField searchParticipantTxt;
 
     @FXML
     private Label participantTime;
@@ -47,7 +47,10 @@ public class BannerWindowController {
     private TextArea personDataTxt;
 
     @FXML
-    private Pane structurePane;
+    private JFXTextField countryStructureTxt;
+
+    @FXML
+    private ScrollPane structurePane;
 
 
 
