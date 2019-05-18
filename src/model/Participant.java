@@ -94,7 +94,6 @@ public class Participant implements Comparable<String> {
         }else {
             value = 1;
         }
-
         return value;
     }
 

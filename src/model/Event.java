@@ -13,7 +13,7 @@ import java.util.List;
 public class Event {
 
     private Spectator root;
-    
+
     private Participant first;
 
 
@@ -62,7 +62,7 @@ public class Event {
     }
 
     private void chooseParticipants(){
-        List<Spectator> list = toList();
+        List<Spectator> list = treeToList();
         int[] randomParticipants = new int[list.size()/2];
 
         for (int i = 0; i < randomParticipants.length; i++) {
@@ -86,10 +86,9 @@ public class Event {
     private void createParticipants(List<Spectator> list, int[] randomParticipants){
         for (int i = 0; i < randomParticipants.length; i++) {
             Spectator s = list.get(randomParticipants[i]);
-            System.out.println(randomParticipants[i]);
-            System.out.println(i + ": " + s.getId());
 
             Participant participant = new Participant(s.getName(), s.getLastName(), s.getId(), s.getEmail(), s.getGender(), s.getCountry(), s.getAvatar(), s.getBirthday());
+            System.out.println(participant.getId());
 
             addParticipant(participant);
         }
@@ -113,11 +112,35 @@ public class Event {
 
 
 
-    public List<Spectator> toList(){
+    private List<Spectator> treeToList(){
         List<Spectator> list = new ArrayList<>();
 
         if (root != null){
             root.inOrder(list);
+        }
+
+        return list;
+    }
+
+    public List<Participant> linkedListToList(String country) throws EmptyDataException, NotRegisteredPersonException{
+        List<Participant> list = new ArrayList<>();
+
+        if (country.equals("")){
+            throw new EmptyDataException();
+
+        }else {
+            if (first == null){
+                throw new NotRegisteredPersonException();
+            }else {
+                Participant current = first;
+
+                while (current != null){
+                    if (current.getCountry().equals(country)){
+                        list.add(current);
+                    }
+                    current = current.getNext();
+                }
+            }
         }
 
         return list;
@@ -175,5 +198,13 @@ public class Event {
             throw new NullPointerException();
         }
         return searched;
+    }
+
+
+
+    public long calculateTime(long n1, long n2){
+        long number = n2 - n1;
+
+        return number;
     }
 }
