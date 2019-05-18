@@ -146,7 +146,16 @@ public class BannerWindowController {
 
     @FXML
     void spectatorStructureClicked(ActionEvent event) {
-        
+        List<Spectator> list = null;
+
+        try {
+            list = this.event.treeToList(countryStructureTxt.getText());
+            
+        } catch (EmptyDataException e) {
+            e.messsage();
+        } catch (NotRegisteredPersonException e) {
+            e.message();
+        }
     }
 
     @FXML

@@ -117,6 +117,20 @@ public class Spectator {
         }
     }
 
+    public void inOrder(List<Spectator> list, String country){
+        if (left != null){
+            left.inOrder(list, country);
+        }
+
+        if (this.country.compareToIgnoreCase(country) == 0){
+            list.add(this);
+        }
+
+        if (right != null){
+            right.inOrder(list, country);
+        }
+    }
+
     @Override
     public String toString() {
         String message;

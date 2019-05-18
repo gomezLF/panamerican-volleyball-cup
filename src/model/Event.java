@@ -122,6 +122,24 @@ public class Event {
         return list;
     }
 
+    public List<Spectator> treeToList(String country)throws EmptyDataException, NotRegisteredPersonException {
+        List<Spectator> list = new ArrayList<>();
+
+        if (country.equals("")){
+            throw new EmptyDataException();
+
+        }else {
+            if (root == null){
+                throw new NotRegisteredPersonException();
+
+            }else {
+                root.inOrder(list, country);
+            }
+        }
+
+        return list;
+    }
+
     public List<Participant> linkedListToList(String country) throws EmptyDataException, NotRegisteredPersonException{
         List<Participant> list = new ArrayList<>();
 
