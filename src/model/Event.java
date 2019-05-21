@@ -2,7 +2,9 @@ package model;
 
 import customExceptions.EmptyDataException;
 import customExceptions.NotRegisteredPersonException;
+import userInterface.BannerWindowController;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -14,18 +16,33 @@ public class Event {
 
     private Spectator root;
 
-    private Participant first;
+    private Spectator countrySpectatorRoot;
 
+    private Participant first;
 
 
     public Event() {
         root = null;
         first = null;
+        countrySpectatorRoot = null;
+    }
+
+
+    public Spectator getRoot(){
+        return  root;
+    }
+
+    public Spectator getCountrySpectatorRoot() {
+        return countrySpectatorRoot;
     }
 
 
 
     public void readData(String path) throws IOException {
+
+        this.root = null;
+        this.first = null;
+
         File file = new File(path);
         FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
@@ -88,7 +105,6 @@ public class Event {
             Spectator s = list.get(randomParticipants[i]);
 
             Participant participant = new Participant(s.getName(), s.getLastName(), s.getId(), s.getEmail(), s.getGender(), s.getCountry(), s.getAvatar(), s.getBirthday());
-            System.out.println(participant.getId());
 
             addParticipant(participant);
         }
@@ -116,13 +132,12 @@ public class Event {
         List<Spectator> list = new ArrayList<>();
 
         if (root != null){
-            root.inOrder(list);
+            root.postOrder(list);
         }
-
         return list;
     }
 
-    public List<Spectator> treeToList(String country)throws EmptyDataException, NotRegisteredPersonException {
+    public List<Spectator> treeToList(String country, Spectator root)throws EmptyDataException, NotRegisteredPersonException {
         List<Spectator> list = new ArrayList<>();
 
         if (country.equals("")){
@@ -133,7 +148,7 @@ public class Event {
                 throw new NotRegisteredPersonException();
 
             }else {
-                root.inOrder(list, country);
+                root.preOrder(list, country);
             }
         }
 
@@ -160,7 +175,6 @@ public class Event {
                 }
             }
         }
-
         return list;
     }
 
@@ -221,8 +235,87 @@ public class Event {
 
 
     public long calculateTime(long n1, long n2){
-        long number = n2 - n1;
+        long time = n2 - n1;
 
-        return number;
+        return time;
+    }
+
+
+
+    public String[] organizeToDraw(List<Spectator> list){
+        this.countrySpectatorRoot = null;
+
+        String[] positions = new String[list.size()];
+
+        for (int i = 0; i < list.size(); i++) {
+            Spectator toAdd = new Spectator(list.get(i).getName(), list.get(i).getLastName(), list.get(i).getId(), list.get(i).getEmail(), list.get(i).getGender(), list.get(i).getCountry(), list.get(i).getAvatar(), list.get(i).getBirthday());
+
+            if (countrySpectatorRoot == null){
+                countrySpectatorRoot = toAdd;
+                String position = list.get(i).getId() + "," + "500" + "," + "100";
+                positions[i] = position;
+
+            }else {
+                boolean ok = true;
+                Spectator temp = countrySpectatorRoot;
+
+                while(ok){
+
+                    if (temp.getId().compareToIgnoreCase(toAdd.getId()) > 0){
+                        if (temp.getLeft() == null){
+                            int[] p = searchPositions(temp.getId(), positions);
+
+                            temp.setLeft(toAdd);
+                            int posX = p[0] - BannerWindowController.SIZE*2;
+                            int posY = p[1] + BannerWindowController.SIZE*2;
+
+                            positions[i] = toAdd.getId() + "," + posX + "," + posY;
+                            ok = false;
+
+                        }else {
+                            temp = temp.getLeft();
+                        }
+
+                    }else if (temp.getId().compareToIgnoreCase(toAdd.getId()) < 0){
+                        if (temp.getRight() == null){
+                            int[] p = searchPositions(temp.getId(), positions);
+
+                            temp.setRight(toAdd);
+                            int posX = p[0] + BannerWindowController.SIZE*2;
+                            int posY = p[1] + BannerWindowController.SIZE*2;
+
+                            positions[i] = toAdd.getId() + "," + posX + "," + posY;
+                            ok = false;
+
+                        }else {
+                            temp = temp.getRight();
+                        }
+                    }
+                }
+            }
+        }
+        return positions;
+    }
+
+
+
+    public int[] searchPositions(String id, String[] positions){
+        int[] p = new int[2];
+        boolean founded = false;
+
+        for (int i = 0; i < positions.length && !founded; i++) {
+            String[] words = positions[i].split(",");
+
+            if (words[0].equals(id)){
+                int x = Integer.parseInt(words[1]);
+                int y = Integer.parseInt(words[2]);
+
+                p[0] = x;
+                p[1] = y;
+
+                founded = true;
+            }
+        }
+        return p;
     }
 }

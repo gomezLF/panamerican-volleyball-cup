@@ -4,12 +4,15 @@ import customExceptions.EmptyDataException;
 import customExceptions.NotRegisteredPersonException;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -20,10 +23,14 @@ import model.Spectator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.RecursiveAction;
 
 
 public class BannerWindowController {
+
+    public static final int SIZE = 100;
 
     private Event event;
 
@@ -146,11 +153,20 @@ public class BannerWindowController {
 
     @FXML
     void spectatorStructureClicked(ActionEvent event) {
-        List<Spectator> list = null;
+
+        List<Spectator> tree = new ArrayList<>();
+        List<Spectator> list;
 
         try {
-            list = this.event.treeToList(countryStructureTxt.getText());
-            
+            list = this.event.treeToList(countryStructureTxt.getText(), this.event.getRoot());
+            String[] positions = this.event.organizeToDraw(list);
+            this.event.getCountrySpectatorRoot().preOrder(tree);
+
+            Pane pane = new Pane();
+            structurePane.setContent(pane);
+
+            drawTree(tree, positions, pane);
+
         } catch (EmptyDataException e) {
             e.messsage();
         } catch (NotRegisteredPersonException e) {
@@ -160,7 +176,7 @@ public class BannerWindowController {
 
     @FXML
     void participantStructureClicked(ActionEvent event) {
-        List<Participant> list = null;
+        List<Participant> list;
 
         try {
             list = this.event.linkedListToList(countryStructureTxt.getText());
@@ -182,10 +198,17 @@ public class BannerWindowController {
                     Line next = new Line(rectangle.getX() + 300, rectangle.getY() + 135, rectangle.getX() + 900, rectangle.getY() + 135);
                     Line prev = new Line(rectangle.getX() + 300, rectangle.getY() + 165, rectangle.getX() + 900, rectangle.getY() + 165);
 
-                    pane.getChildren().addAll(next, prev);
+                    Line next1 = new Line(next.getStartX(), next.getStartY(), next.getStartX() + 10, next.getStartY() - 10);
+                    Line next2 = new Line(next.getStartX(), next.getStartY(), next.getStartX() + 10, next.getStartY() + 10);
+
+                    Line next3 = new Line(prev.getStartX() + 300, prev.getStartY(), prev.getStartX() + 290, prev.getStartY() - 10);
+                    Line next4 = new Line(prev.getStartX() + 300, prev.getStartY(), prev.getStartX() + 290, prev.getStartY() + 10);
+
+                    pane.getChildren().addAll(next, prev, next1, next2, next3, next4);
                 }
                 x = x + 600;
             }
+
             structurePane.setContent(pane);
 
         } catch (EmptyDataException e) {
@@ -216,6 +239,39 @@ public class BannerWindowController {
         imageView.setFitHeight(rectangle.getHeight()/2);
 
         return imageView;
+    }
+
+
+
+    private void drawTree(List<Spectator> list, String[] positions, Pane pane){
+
+        for (int i = 0; i < list.size(); i++) {
+            int[] p = this.event.searchPositions(list.get(i).getId(), positions);
+
+            Ellipse e = new Ellipse(p[0], p[1], SIZE, SIZE);
+            e.setFill(Color.DARKORANGE);
+
+            ImageView iv = new ImageView(new Image(list.get(i).getAvatar()));
+            iv.setFitHeight(100);
+            iv.setFitWidth(100);
+            iv.setLayoutX(p[0]);
+            iv.setLayoutY(p[1] - (SIZE/2));
+
+            pane.getChildren().addAll(e, iv);
+
+            if (list.get(i).getLeft() != null){
+                int[] left = this.event.searchPositions(list.get(i).getLeft().getId(), positions);
+
+                Line line = new Line(p[0], p[1], left[0], left[1]);
+                pane.getChildren().add(line);
+            }
+            if (list.get(i).getRight() != null){
+                int[] right = this.event.searchPositions(list.get(i).getRight().getId(), positions);
+
+                Line line = new Line(p[0], p[1], right[0], right[1]);
+                pane.getChildren().add(line);
+            }
+        }
     }
 
 

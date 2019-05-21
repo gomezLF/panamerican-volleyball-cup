@@ -6,6 +6,7 @@ public class Spectator {
 
     private Spectator left;
     private Spectator right;
+    private Spectator parent;
 
     private String name;
     private String lastName;
@@ -29,6 +30,7 @@ public class Spectator {
 
         left = null;
         right = null;
+        parent = null;
     }
 
 
@@ -64,18 +66,44 @@ public class Spectator {
         return birthday;
     }
 
+    public Spectator getLeft() {
+        return left;
+    }
+
+    public Spectator getRight() {
+        return right;
+    }
+
+    public Spectator getParent() {
+        return parent;
+    }
+
+    public void setLeft(Spectator left) {
+        this.left = left;
+    }
+
+    public void setRight(Spectator right) {
+        this.right = right;
+    }
+
+    public void setParent(Spectator parent) {
+        this.parent = parent;
+    }
 
     public void addSpectator(Spectator spectator){
+
         if (spectator.id.compareToIgnoreCase(id) == 0 || spectator.id.compareToIgnoreCase(id) < 0){
             if (left == null){
                 left = spectator;
+                left.parent = this;
             }else {
                 left.addSpectator(spectator);
             }
 
-        }else {
+        }else if (spectator.id.compareToIgnoreCase(id) > 0){
             if (right == null){
                 right = spectator;
+                right.parent = this;
             }else {
                 right.addSpectator(spectator);
             }
@@ -105,30 +133,41 @@ public class Spectator {
         return searched;
     }
 
-    public void inOrder(List<Spectator> list){
-        if (left != null){
-            left.inOrder(list);
-        }
-
-        list.add(this);
-
-        if (right != null){
-            right.inOrder(list);
-        }
-    }
-
-    public void inOrder(List<Spectator> list, String country){
-        if (left != null){
-            left.inOrder(list, country);
-        }
-
+    public void preOrder(List<Spectator> list, String country){
         if (this.country.compareToIgnoreCase(country) == 0){
             list.add(this);
         }
 
-        if (right != null){
-            right.inOrder(list, country);
+        if (left != null){
+            left.preOrder(list, country);
         }
+
+        if (right != null){
+            right.preOrder(list, country);
+        }
+    }
+
+    public void preOrder(List<Spectator> list){
+        list.add(this);
+
+        if (left != null){
+            left.preOrder(list);
+        }
+        if (right != null){
+            right.preOrder(list);
+        }
+    }
+
+    public void postOrder(List<Spectator> list){
+        if (left != null){
+            left.postOrder(list);
+        }
+
+        if (right != null){
+            right.postOrder(list);
+        }
+
+        list.add(this);
     }
 
     @Override

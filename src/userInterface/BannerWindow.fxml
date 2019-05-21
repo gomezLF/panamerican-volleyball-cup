@@ -205,7 +205,7 @@
                   </VBox>
                </bottom>
                <center>
-                  <ScrollPane fx:id="structurePane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                  <ScrollPane fx:id="structurePane" prefHeight="422.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
                </center>
                <top>
                   <Label style="-fx-background-color: darkorange; -fx-background-radius: 50;" text="   Estructura   " textFill="WHITE" BorderPane.alignment="CENTER">
