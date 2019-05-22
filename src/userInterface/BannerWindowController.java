@@ -4,14 +4,12 @@ import customExceptions.EmptyDataException;
 import customExceptions.NotRegisteredPersonException;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -25,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.RecursiveAction;
 
 
 public class BannerWindowController {
@@ -254,21 +251,26 @@ public class BannerWindowController {
             ImageView iv = new ImageView(new Image(list.get(i).getAvatar()));
             iv.setFitHeight(100);
             iv.setFitWidth(100);
-            iv.setLayoutX(p[0]);
-            iv.setLayoutY(p[1] - (SIZE/2));
+            iv.setLayoutX(p[0] - SIZE/2);
+            iv.setLayoutY(p[1] - SIZE);
 
             pane.getChildren().addAll(e, iv);
+
+            System.out.println("Left: " + list.get(i).getLeft() + "\n" + "Right: " + list.get(i).getRight() + "\n" + "\n");
 
             if (list.get(i).getLeft() != null){
                 int[] left = this.event.searchPositions(list.get(i).getLeft().getId(), positions);
 
                 Line line = new Line(p[0], p[1], left[0], left[1]);
+                line.setStroke(Color.DARKORANGE);
                 pane.getChildren().add(line);
             }
+
             if (list.get(i).getRight() != null){
                 int[] right = this.event.searchPositions(list.get(i).getRight().getId(), positions);
 
                 Line line = new Line(p[0], p[1], right[0], right[1]);
+                line.setStroke(Color.DARKORANGE);
                 pane.getChildren().add(line);
             }
         }

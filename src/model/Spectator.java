@@ -6,7 +6,6 @@ public class Spectator {
 
     private Spectator left;
     private Spectator right;
-    private Spectator parent;
 
     private String name;
     private String lastName;
@@ -16,7 +15,6 @@ public class Spectator {
     private String country;
     private String avatar;
     private String birthday;
-
 
     public Spectator(String name, String lastName, String id, String email, String gender, String country, String avatar, String birthday) {
         this.name = name;
@@ -30,7 +28,6 @@ public class Spectator {
 
         left = null;
         right = null;
-        parent = null;
     }
 
 
@@ -74,10 +71,6 @@ public class Spectator {
         return right;
     }
 
-    public Spectator getParent() {
-        return parent;
-    }
-
     public void setLeft(Spectator left) {
         this.left = left;
     }
@@ -86,16 +79,11 @@ public class Spectator {
         this.right = right;
     }
 
-    public void setParent(Spectator parent) {
-        this.parent = parent;
-    }
-
     public void addSpectator(Spectator spectator){
 
         if (spectator.id.compareToIgnoreCase(id) == 0 || spectator.id.compareToIgnoreCase(id) < 0){
             if (left == null){
                 left = spectator;
-                left.parent = this;
             }else {
                 left.addSpectator(spectator);
             }
@@ -103,7 +91,6 @@ public class Spectator {
         }else if (spectator.id.compareToIgnoreCase(id) > 0){
             if (right == null){
                 right = spectator;
-                right.parent = this;
             }else {
                 right.addSpectator(spectator);
             }
