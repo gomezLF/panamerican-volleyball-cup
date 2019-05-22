@@ -32,8 +32,6 @@ class EventTest {
 
     @Test
     void readDataTest(){
-        setupScenary2();
-
 
     }
 

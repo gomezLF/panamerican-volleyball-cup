@@ -3,6 +3,9 @@ package modelTest;
 import model.Spectator;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SpectatorTest {
@@ -10,6 +13,10 @@ class SpectatorTest {
     private Spectator spectator;
     private Spectator left;
     private Spectator right;
+
+    private List<Spectator> spectatorList;
+
+    private String message;
 
     private void setupScenary1(){
 
@@ -25,12 +32,64 @@ class SpectatorTest {
         setupScenary2();
 
         Spectator s1 = new Spectator("Case", "Darracott", "05-9151344", "cdarracottb@shutterfly.com", "Male", "Honduras", "gogole.com", "6/2/1981");
-        Spectator s2 = new Spectator("Zsazsa", "Pellatt", "99-8514599","zpellatt5@latimes.com", "Female", "Indonesia", "google.com", "10/24/2008");
+        Spectator s2 = new Spectator("Zsazsa", "Pellatt", "99-8514599","zpellatt5@latimes.com", "Female", "Nicaragua", "google.com", "10/24/2008");
 
         spectator.addSpectator(left);
         spectator.addSpectator(right);
         spectator.addSpectator(s1);
         spectator.addSpectator(s2);
+    }
+
+    private void setupScenary4(){
+        setupScenary3();
+
+        Spectator s1 = new Spectator("Heywood", "Gringley", "04-2599362", "hgringleyj@biglobe.ne.jp", "Male", "Nicaragua", "https://robohash.org/quiaestdolore.jpg?size=200x200&set=set1", "4/20/1981");
+        Spectator s2 = new Spectator("Caty", "Barkaway", "03-1338300", "cbarkaway2@acquirethisname.com", "Female", "Nicaragua", "https://robohash.org/voluptatemsaepeaut.jpg?size=200x200&set=set1", "4/8/1990");
+        Spectator s3 = new Spectator("Layla", "Fergyson", "42-1300339", "lfergysona@ted.com", "Female", "Nicaragua", "https://robohash.org/adverototam.jpg?size=200x200&set=set1","4/10/1978");
+        Spectator s4 = new Spectator("Ilise", "Timbs", "29-3467986", "itimbs8@feedburner.com", "Female", "Nicaragua", "https://robohash.org/laborequasinostrum.jpg?size=200x200&set=set1", "10/24/2008");
+        Spectator s5 = new Spectator("Pepito", "Perez", "00-0000000", "pepito@gmail.com", "Male", "Nicaragua", "google.com", "9/20/2005");
+
+        spectator.addSpectator(s1);
+        spectator.addSpectator(s2);
+        spectator.addSpectator(s3);
+        spectator.addSpectator(s4);
+        spectator.addSpectator(s5);
+
+
+    }
+
+    private void setupScenary5(){
+        setupScenary2();
+        spectatorList = new ArrayList<>();
+
+        Spectator s1 = new Spectator("Heywood", "Gringley", "04-2599362", "hgringleyj@biglobe.ne.jp", "Male", "Nicaragua", "google.com", "4/20/1981");
+        Spectator s2 = new Spectator("Caty", "Barkaway", "03-1338300", "cbarkaway2@acquirethisname.com", "Female", "Nicaragua", "google.com", "4/8/1990");
+        Spectator s3 = new Spectator("Layla", "Fergyson", "42-1300339", "lfergysona@ted.com", "Female", "Nicaragua", "google.com","4/10/1978");
+        Spectator s4 = new Spectator("Ilise", "Timbs", "29-3467986", "itimbs8@feedburner.com", "Female", "Nicaragua", "google.com", "10/24/2008");
+        Spectator s5 = new Spectator("Pepito", "Perez", "00-0000000", "pepito@gmail.com", "Male", "Nicaragua", "google.com", "9/20/2005");
+
+        spectator.addSpectator(left);
+        spectator.addSpectator(right);
+        spectator.addSpectator(s1);
+        spectator.addSpectator(s2);
+        spectator.addSpectator(s3);
+        spectator.addSpectator(s4);
+        spectator.addSpectator(s5);
+
+        spectatorList.add(s5);
+        spectatorList.add(s2);
+        spectatorList.add(s4);
+        spectatorList.add(s3);
+        spectatorList.add(s1);
+        spectatorList.add(left);
+        spectatorList.add(right);
+        spectatorList.add(spectator);
+    }
+
+    private void setupScenary6(){
+        spectator = new Spectator("Felipe", "Andrade", "1523548", "gomez@Hotmail.com", "Male", "Colombia", "google.com", "5/18/1999");
+
+        message = "Nombre: " + spectator.getName() + " " + spectator.getLastName() + "\n" + "ID: " + spectator.getId() + "\n" + "E-mail: " + spectator.getEmail() + "\n" + "Género: " + spectator.getGender() + "\n" + "País: " + spectator.getCountry() + "\n" + "Cumpleaños: " + spectator.getBirthday();
     }
 
     @Test
@@ -96,6 +155,55 @@ class SpectatorTest {
         assertEquals(searched_1, s1.getId(), "El ID en la bsuqueda 1 no es el mismo");
         assertEquals(searched_2, s2.getId(), "El ID en la bsuqueda 2 no es el mismo");
         assertEquals(searched_3, s3.getId(), "El ID en la bsuqueda 3 no es el mismo");
+    }
+
+    @Test
+    void preOrderTest1(){
+        setupScenary4();
+
+        List<Spectator> list = new ArrayList<>();
+
+        spectator.preOrder(list, "Nicaragua");
+
+        for (int i = 0; i < list.size(); i++) {
+            assertEquals("Nicaragua", list.get(i).getCountry(), "Los paises en la posicion " + "i " + "no son iguales");
+        }
+
+        assertEquals(7, list.size(), "El tamaño no es el mismo en preOrden1");
+    }
+
+    @Test
+    void preOrderTest2(){
+        setupScenary4();
+
+        List<Spectator> list = new ArrayList<>();
+
+        spectator.preOrder(list);
+
+        assertEquals(10, list.size(), "El tamaño no es el mismo en preOrden2");
+    }
+
+    @Test
+    void postOrder(){
+        setupScenary5();
+
+        List<Spectator> list = new ArrayList<>();
+        spectator.postOrder(list);
+
+        assertEquals(spectatorList.size(), list.size(), "El tamano no es el mismo en postOrden");
+
+        for (int i = 0; i < list.size(); i++) {
+            assertEquals(spectatorList.get(i).getId(), list.get(i).getId(), "No es el mismo ID en posicion " + i);
+        }
+    }
+
+    @Test
+    void ToStringTest(){
+        setupScenary6();
+
+        String returned = spectator.toString();
+
+        assertEquals(message, returned, "El mensaje retornado no es el esperado");
     }
 
 }
